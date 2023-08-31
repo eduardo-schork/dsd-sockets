@@ -286,17 +286,15 @@ public class WebSocketAdapter {
                 break;
             }
             case 3: {
-                System.out.println("Nome da carteira:");
-                String nomeCarteira = scanner.nextLine();
+                String walletName = requestParamToUser("Insira o nome da carteira:");
                 operation = OperationsConstant.DELETE;
-                params = "nome=" + nomeCarteira;
+                params = "nome=" + walletName;
                 break;
             }
             case 4: {
-                System.out.println("Nome da carteira:");
-                String nomeCarteira = scanner.nextLine();
+                String walletName = requestParamToUser("Insira o nome da carteira:");
                 operation = OperationsConstant.GET;
-                params = "nome=" + nomeCarteira;
+                params = "nome=" + walletName;
                 break;
             }
             case 5: {
@@ -304,21 +302,18 @@ public class WebSocketAdapter {
                 break;
             }
             case 6: {
-                System.out.println("Nome da carteira:");
-                String nomeCarteira = scanner.nextLine();
-                System.out.println("CPF da Pessoa:");
-                String cpf = scanner.nextLine();
-                params = "nome=" + nomeCarteira + ";cpf=" + cpf;
+                String walletName = requestParamToUser("Insira o nome da carteira:");
+                String walletResponsible = requestParamToUser("Insira o CPF do cliente:");
+
+                params = "nome=" + walletName + ";cpf=" + walletResponsible;
                 operation = OperationsConstant.ADD;
                 break;
 
             }
             case 7:{
-                System.out.println("Nome da carteira:");
-                String nomeCarteira = scanner.nextLine();
-                System.out.println("CPF da pessoa: ");
-                String cpf = scanner.nextLine();
-                params = "nome=" + nomeCarteira + ";cpf=" + cpf;
+                String walletName = requestParamToUser("Insira o nome da carteira:");
+                String walletResponsible = requestParamToUser("Insira o CPF do cliente:");
+                params = "nome=" + walletName + ";cpf=" + walletResponsible;
                 operation = OperationsConstant.REMOVE;
                 break;
             }

@@ -20,6 +20,7 @@ public class WalletRepositoryImpl implements IWalletRepository {
         }
 
         Person responsavel = LocalStorageAdapter.people.get(params.get("responsavel"));
+
         if (responsavel != null) {
             String nomeParams = params.get("nome");
             Double faixaSalarialInicialParams = Double.parseDouble(params.get("faixaSalarialInicial"));
@@ -33,6 +34,7 @@ public class WalletRepositoryImpl implements IWalletRepository {
             LocalStorageAdapter.wallets.put(wallet.getNome(), wallet);
             return "Carteira cadastrada comm sucesso";
         }
+
         return "Erro na criação de Carteira";
     }
 

@@ -3,9 +3,9 @@ package models;
 public class PhysicalPerson extends Person {
     protected String email;
 
-    public PhysicalPerson(String cpf, String nome, String endereco, String natureza) {
+    public PhysicalPerson(String cpf, String nome, String endereco, String email) {
         super(cpf, nome, endereco);
-        this.email = natureza;
+        this.email = email;
     }
 
     public String getEmail() {
