@@ -13,8 +13,6 @@ public class WebSocketAdapter {
     private Scanner scanner = new Scanner(System.in);
 
     public WebSocketAdapter(String host, int port) throws Exception {
-//        this.socket = new Socket(host, port);
-        this.stream = new DataOutputStream(this.socket.getOutputStream());
         this.startupSocket(host, port);
     }
 
@@ -27,34 +25,38 @@ public class WebSocketAdapter {
     }
 
     private void startupSocket(String host, int port) throws Exception {
+
+        selectModelOperation(host, port);
+
         InputStream inputStream = this.getSocket().getInputStream();
+
         byte[] dadosBrutos = new byte[1024];
 
         int qtdBytesLidos = 0;
 
-        while (qtdBytesLidos >= 0) {
-            selectModelOperation(host, port);
-            qtdBytesLidos = inputStream.read(dadosBrutos);
-            String response = new String(dadosBrutos, 0, qtdBytesLidos);
+        //while (qtdBytesLidos >= 0) {
+        qtdBytesLidos = inputStream.read(dadosBrutos);
+        String response = new String(dadosBrutos, 0, qtdBytesLidos);
 
-            System.out.println(response);
-            System.out.println("\n");
-        }
+        System.out.println(response);
+        System.out.println("\n");
+
+        startupSocket(host,port);
+        //}
     }
 
     private void selectModelOperation(String host, int port) throws Exception {
+
         Scanner scanner = new Scanner(System.in);
         System.out.println(
                 "\n" +
-                "Selecione o modelo que deseja gerir:\n " +
-                "1 - Pessoa\n " +
-                "2 - Pessoa Física\n " +
-                "3 - Pessoa Jurídica\n " +
-                "4 - Carteira\n " +
-                "5 - Sair"
+                        "Selecione o modelo que deseja gerir:\n " +
+                        "1 - Pessoa\n " +
+                        "2 - Pessoa Física\n " +
+                        "3 - Pessoa Jurídica\n " +
+                        "4 - Carteira\n " +
+                        "5 - Sair"
         );
-
-        this.socket = new Socket(host, port);
 
         int modelToHandle = scanner.nextInt();
 
@@ -71,9 +73,13 @@ public class WebSocketAdapter {
             case 5:
                 throw new Exception("Fim da execução");
             default:
-                System.out.println("Opção inválida pressione enter.");
-                break;
+                System.out.println("Opção inválida.");
+                selectModelOperation(host,port);
         }
+
+        this.socket = new Socket(host, port);
+        this.stream = new DataOutputStream(this.socket.getOutputStream());
+
         int operation = scanner.nextInt();
 
         switch (modelToHandle) {
@@ -90,8 +96,8 @@ public class WebSocketAdapter {
                 handleWalletOperation(operation);
                 break;
             default:
-                System.out.println("Opção inválida pressione enter.");
-                break;
+                System.out.println("Opção inválida.");
+                selectModelOperation(host,port);
         }
     }
 
