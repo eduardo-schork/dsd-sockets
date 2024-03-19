@@ -8,6 +8,7 @@ import repositories.person.physical_person.PhysicalPersonRepositoryImpl;
 import repositories.wallet.WalletRepositoryImpl;
 
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -16,21 +17,29 @@ public class WebSocketAdapter {
     DataInputStream dataInputStream;
 
     public WebSocketAdapter(int port) throws Exception {
-        ServerSocket serverSocket = new ServerSocket(port);
-        System.out.println("Esperando conexões");
-        serverSocket.setReuseAddress(true);
-        Socket socket = serverSocket.accept();
 
-        System.out.println("Conexão estabelecida");
-        this.dataInputStream = new DataInputStream(socket.getInputStream());
+        ServerSocket serverSocket = new ServerSocket(port);
+        serverSocket.setReuseAddress(true);
+        Socket socket = null;
 
         while (true) {
-            String message = this.dataInputStream.readUTF();
-            String response = this.executeOperation(message);
+            try{
+                System.out.println("Esperando conexões");
+                socket = serverSocket.accept();
+                System.out.println("Conexão estabelecida com " + socket.getInetAddress().getHostAddress());
 
-            System.out.println("Resposta: \n" + response);
+                this.dataInputStream = new DataInputStream(socket.getInputStream());
+                String message = this.dataInputStream.readUTF();
+                String response = this.executeOperation(message);
 
-            socket.getOutputStream().write(response.getBytes());
+                System.out.println("Resposta: \n" + response);
+
+                socket.getOutputStream().write(response.getBytes());
+            } catch (IOException e) {
+                throw new IOException(e.getMessage());
+            } finally {
+                socket.close();
+            }
         }
     }
 

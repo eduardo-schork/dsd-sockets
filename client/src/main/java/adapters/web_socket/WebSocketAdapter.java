@@ -13,9 +13,9 @@ public class WebSocketAdapter {
     private Scanner scanner = new Scanner(System.in);
 
     public WebSocketAdapter(String host, int port) throws Exception {
-        this.socket = new Socket(host, port);
+//        this.socket = new Socket(host, port);
         this.stream = new DataOutputStream(this.socket.getOutputStream());
-        this.startupSocket();
+        this.startupSocket(host, port);
     }
 
     public Socket getSocket() {
@@ -26,14 +26,14 @@ public class WebSocketAdapter {
         return stream;
     }
 
-    private void startupSocket() throws Exception {
+    private void startupSocket(String host, int port) throws Exception {
         InputStream inputStream = this.getSocket().getInputStream();
         byte[] dadosBrutos = new byte[1024];
 
         int qtdBytesLidos = 0;
 
         while (qtdBytesLidos >= 0) {
-            selectModelOperation();
+            selectModelOperation(host, port);
             qtdBytesLidos = inputStream.read(dadosBrutos);
             String response = new String(dadosBrutos, 0, qtdBytesLidos);
 
@@ -42,7 +42,7 @@ public class WebSocketAdapter {
         }
     }
 
-    private void selectModelOperation() throws Exception {
+    private void selectModelOperation(String host, int port) throws Exception {
         Scanner scanner = new Scanner(System.in);
         System.out.println(
                 "\n" +
@@ -53,6 +53,8 @@ public class WebSocketAdapter {
                 "4 - Carteira\n " +
                 "5 - Sair"
         );
+
+        this.socket = new Socket(host, port);
 
         int modelToHandle = scanner.nextInt();
 
@@ -72,7 +74,6 @@ public class WebSocketAdapter {
                 System.out.println("Opção inválida pressione enter.");
                 break;
         }
-
         int operation = scanner.nextInt();
 
         switch (modelToHandle) {
