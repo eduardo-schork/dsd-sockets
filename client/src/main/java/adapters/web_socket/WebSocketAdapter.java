@@ -68,23 +68,28 @@ public class WebSocketAdapter {
                         "5 - Sair"
         );
 
-        int modelToHandle = scanner.nextInt();
+        String modelToHandle = scanner.next();
 
         switch (modelToHandle) {
-            case 1:
-            case 2:
-            case 3:
+            case "1":
+            case "2":
+            case "3":
                 selectDefaultOptionsOperation();
                 break;
-            case 4:
+            case "4":
                 selectDefaultOptionsOperation();
                 selectCarteiraOptionsOperation();
                 break;
-            case 5:
+            case "5":
                 throw new Exception("Fim da execução");
             default:
-                System.out.println("Opção inválida.");
-                selectModelOperation(host,port);
+                System.out.println("Opção inválida, digite novamente.");
+                isFirstConnection = true;
+                try {
+                    startupSocket(host, port);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
         }
 
         if (!isFirstConnection) {
@@ -92,24 +97,29 @@ public class WebSocketAdapter {
             this.stream = new DataOutputStream(this.socket.getOutputStream());
         }
 
-        int operation = scanner.nextInt();
+        String operation = scanner.next();
 
         switch (modelToHandle) {
-            case 1:
+            case "1":
                 handlePersonOperation(operation, host, port);
                 break;
-            case 2:
+            case "2":
                 handlePhysicalPersonOperation(operation, host, port);
                 break;
-            case 3:
+            case "3":
                 handleLegalPersonOperation(operation, host, port);
                 break;
-            case 4:
+            case "4":
                 handleWalletOperation(operation, host, port);
                 break;
             default:
-                System.out.println("Opção inválida.");
-                selectModelOperation(host,port);
+                System.out.println("Opção inválida, digite novamente.");
+                isFirstConnection = true;
+                try {
+                    startupSocket(host, port);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
         }
     }
 
@@ -132,12 +142,12 @@ public class WebSocketAdapter {
         this.getStream().writeUTF(message);
     }
 
-    private void handlePersonOperation(int option, String host, int port) throws IOException {
+    private void handlePersonOperation(String option, String host, int port) throws IOException {
         String params = "";
         String operation = "";
 
         switch (option) {
-            case 1 : {
+            case "1" : {
                 String cpf = requestParamToUser("Insira o CPF");
                 String nome = requestParamToUser("Insira o Nome");
                 String endereco = requestParamToUser("Insira o Endereço");
@@ -146,7 +156,7 @@ public class WebSocketAdapter {
                 operation = OperationsConstant.INSERT;
                 break;
             }
-            case 2: {
+            case "2": {
                 String cpf = requestParamToUser("Insira o CPF");
                 String nome = requestParamToUser("Insira o Nome");
                 String endereco = requestParamToUser("Insira o Endereço");
@@ -155,24 +165,25 @@ public class WebSocketAdapter {
                 operation = OperationsConstant.UPDATE;
                 break;
             }
-            case 3: {
+            case "3": {
                 String cpf = requestParamToUser("Insira o CPF");
                 params = "cpf=" + cpf;
                 operation = OperationsConstant.DELETE;
                 break;
             }
-            case 4: {
+            case "4": {
                 String cpf = requestParamToUser("Insira o CPF");
                 params = "cpf=" + cpf;
                 operation = OperationsConstant.GET;
                 break;
             }
-            case 5: {
+            case "5": {
                 operation = OperationsConstant.LIST;
                 break;
             }
             default: {
                 System.out.println("Opção inválida, digite novamente.");
+                isFirstConnection = true;
                 try {
                     startupSocket(host, port);
                 } catch (Exception e) {
@@ -183,12 +194,12 @@ public class WebSocketAdapter {
 
         sendMessagePayload("pessoa", operation, params);
     }
-    private void handleLegalPersonOperation(int option, String host, int port) throws IOException {
+    private void handleLegalPersonOperation(String option, String host, int port) throws IOException {
         String params = "";
         String operation = "";
 
         switch (option) {
-            case 1 : {
+            case "1" : {
                 String cpf = requestParamToUser("Insira o CPF");
                 String nome = requestParamToUser("Insira o Nome");
                 String endereco = requestParamToUser("Insira o Endereço");
@@ -198,7 +209,7 @@ public class WebSocketAdapter {
                 operation = OperationsConstant.INSERT;
                 break;
             }
-            case 2: {
+            case "2": {
                 String cpf = requestParamToUser("Insira o CPF");
                 String nome = requestParamToUser("Insira o Nome");
                 String endereco = requestParamToUser("Insira o Endereço");
@@ -208,24 +219,25 @@ public class WebSocketAdapter {
                 operation = OperationsConstant.UPDATE;
                 break;
             }
-            case 3: {
+            case "3": {
                 String cpf = requestParamToUser("Insira o CPF");
                 params = "cpf=" + cpf;
                 operation = OperationsConstant.DELETE;
                 break;
             }
-            case 4: {
+            case "4": {
                 String cpf = requestParamToUser("Insira o CPF");
                 params = "cpf=" + cpf;
                 operation = OperationsConstant.GET;
                 break;
             }
-            case 5: {
+            case "5": {
                 operation = OperationsConstant.LIST;
                 break;
             }
             default: {
                 System.out.println("Opção inválida, digite novamente.");
+                isFirstConnection = true;
                 try {
                     startupSocket(host, port);
                 } catch (Exception e) {
@@ -236,12 +248,12 @@ public class WebSocketAdapter {
 
         sendMessagePayload("pessoa_juridica", operation, params);
     }
-    private void handlePhysicalPersonOperation(int option, String host, int port) throws IOException {
+    private void handlePhysicalPersonOperation(String option, String host, int port) throws IOException {
         String params = "";
         String operation = "";
 
         switch (option) {
-            case 1 : {
+            case "1" : {
                 String cpf = requestParamToUser("Insira o CPF");
                 String nome = requestParamToUser("Insira o Nome");
                 String endereco = requestParamToUser("Insira o Endereço");
@@ -251,7 +263,7 @@ public class WebSocketAdapter {
                 operation = OperationsConstant.INSERT;
                 break;
             }
-            case 2: {
+            case "2": {
                 String cpf = requestParamToUser("Insira o CPF");
                 String nome = requestParamToUser("Insira o Nome");
                 String endereco = requestParamToUser("Insira o Endereço");
@@ -261,24 +273,25 @@ public class WebSocketAdapter {
                 operation = OperationsConstant.UPDATE;
                 break;
             }
-            case 3: {
+            case "3": {
                 String cpf = requestParamToUser("Insira o CPF");
                 params = "cpf=" + cpf;
                 operation = OperationsConstant.DELETE;
                 break;
             }
-            case 4: {
+            case "4": {
                 String cpf = requestParamToUser("Insira o CPF");
                 params = "cpf=" + cpf;
                 operation = OperationsConstant.GET;
                 break;
             }
-            case 5: {
+            case "5": {
                 operation = OperationsConstant.LIST;
                 break;
             }
             default: {
                 System.out.println("Opção inválida, digite novamente.");
+                isFirstConnection = true;
                 try {
                     startupSocket(host, port);
                 } catch (Exception e) {
@@ -289,12 +302,12 @@ public class WebSocketAdapter {
 
         sendMessagePayload("pessoa_fisica", operation, params);
     }
-    private void handleWalletOperation(int option, String host, int port) throws IOException {
+    private void handleWalletOperation(String option, String host, int port) throws IOException {
         Scanner scanner = new Scanner(System.in);
         String params = "";
         String operation = "";
         switch (option) {
-            case 1: {
+            case "1": {
                 String walletName = requestParamToUser("Insira o nome da carteira:");
                 String walletResponsible = requestParamToUser("Insira o CPF do responsável:");
                 String walletInitialSalary = requestParamToUser("Insira a faixa salarial inicial:");
@@ -304,7 +317,7 @@ public class WebSocketAdapter {
                 operation = OperationsConstant.INSERT;
                 break;
             }
-            case 2: {
+            case "2": {
                 String walletName = requestParamToUser("Insira o nome da carteira:");
                 String walletNewName = requestParamToUser("Insira o novo nome da carteira:");
                 String walletResponsible = requestParamToUser("Insira o CPF do responsável:");
@@ -316,23 +329,23 @@ public class WebSocketAdapter {
                 operation = OperationsConstant.UPDATE;
                 break;
             }
-            case 3: {
+            case "3": {
                 String walletName = requestParamToUser("Insira o nome da carteira:");
                 operation = OperationsConstant.DELETE;
                 params = "nome=" + walletName;
                 break;
             }
-            case 4: {
+            case "4": {
                 String walletName = requestParamToUser("Insira o nome da carteira:");
                 operation = OperationsConstant.GET;
                 params = "nome=" + walletName;
                 break;
             }
-            case 5: {
+            case "5": {
                 operation = OperationsConstant.LIST;
                 break;
             }
-            case 6: {
+            case "6": {
                 String walletName = requestParamToUser("Insira o nome da carteira:");
                 String walletResponsible = requestParamToUser("Insira o CPF do cliente:");
 
@@ -341,7 +354,7 @@ public class WebSocketAdapter {
                 break;
 
             }
-            case 7:{
+            case "7":{
                 String walletName = requestParamToUser("Insira o nome da carteira:");
                 String walletResponsible = requestParamToUser("Insira o CPF do cliente:");
                 params = "nome=" + walletName + ";cpf=" + walletResponsible;
@@ -350,6 +363,7 @@ public class WebSocketAdapter {
             }
             default: {
                 System.out.println("Opção inválida, digite novamente.");
+                isFirstConnection = true;
                 try {
                     startupSocket(host, port);
                 } catch (Exception e) {
