@@ -11,8 +11,19 @@ public class WebSocketAdapter {
     private Socket socket;
     private DataOutputStream stream;
     private Scanner scanner = new Scanner(System.in);
+    private Boolean isFirstConnection = true;
 
     public WebSocketAdapter(String host, int port) throws Exception {
+
+        if(isFirstConnection){
+            try {
+                this.socket = new Socket(host, port);
+                this.stream = new DataOutputStream(this.socket.getOutputStream());
+            }catch (Exception e){
+                System.out.println("Não foi possível conectar no servidor informado.");
+                System.out.println(e.getMessage());
+            }
+        }
         this.startupSocket(host, port);
     }
 
@@ -34,15 +45,14 @@ public class WebSocketAdapter {
 
         int qtdBytesLidos = 0;
 
-        //while (qtdBytesLidos >= 0) {
         qtdBytesLidos = inputStream.read(dadosBrutos);
         String response = new String(dadosBrutos, 0, qtdBytesLidos);
 
         System.out.println(response);
         System.out.println("\n");
-
+        isFirstConnection = false;
         startupSocket(host,port);
-        //}
+
     }
 
     private void selectModelOperation(String host, int port) throws Exception {
@@ -77,8 +87,10 @@ public class WebSocketAdapter {
                 selectModelOperation(host,port);
         }
 
-        this.socket = new Socket(host, port);
-        this.stream = new DataOutputStream(this.socket.getOutputStream());
+        if (!isFirstConnection) {
+            this.socket = new Socket(host, port);
+            this.stream = new DataOutputStream(this.socket.getOutputStream());
+        }
 
         int operation = scanner.nextInt();
 
@@ -160,8 +172,9 @@ public class WebSocketAdapter {
                 break;
             }
             default: {
-                System.out.println("Opção inválida pressione enter.");
-                break;
+                System.out.println("Opção inválida, digite novamente.");
+//                break;
+                handlePersonOperation(option);
             }
         }
 
@@ -209,8 +222,9 @@ public class WebSocketAdapter {
                 break;
             }
             default: {
-                System.out.println("Opção inválida pressione enter.");
-                break;
+                System.out.println("Opção inválida, digite novamente.");
+//                break;
+                handleLegalPersonOperation(option);
             }
         }
 
@@ -258,8 +272,9 @@ public class WebSocketAdapter {
                 break;
             }
             default: {
-                System.out.println("Opção inválida pressione enter.");
-                break;
+                System.out.println("Opção inválida, digite novamente.");
+//                break;
+                handlePhysicalPersonOperation(option);
             }
         }
 
@@ -325,8 +340,9 @@ public class WebSocketAdapter {
                 break;
             }
             default: {
-                System.out.println("Opção inválida pressione enter.");
-                break;
+                System.out.println("Opção inválida, digite novamente.");
+//                break;
+                handleWalletOperation(option);
             }
         }
 
