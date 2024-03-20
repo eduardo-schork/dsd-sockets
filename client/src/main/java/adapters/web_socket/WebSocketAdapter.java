@@ -19,12 +19,12 @@ public class WebSocketAdapter {
             try {
                 this.socket = new Socket(host, port);
                 this.stream = new DataOutputStream(this.socket.getOutputStream());
+                this.startupSocket(host, port);
             }catch (Exception e){
                 System.out.println("Não foi possível conectar no servidor informado.");
                 System.out.println(e.getMessage());
             }
         }
-        this.startupSocket(host, port);
     }
 
     public Socket getSocket() {
