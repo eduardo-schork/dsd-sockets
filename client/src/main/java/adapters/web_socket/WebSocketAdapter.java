@@ -21,7 +21,7 @@ public class WebSocketAdapter {
                 this.stream = new DataOutputStream(this.socket.getOutputStream());
                 this.startupSocket(host, port);
             }catch (Exception e){
-                System.out.println("Não foi possível conectar no servidor informado.");
+                System.out.println("Não foi possível conectar com " + host + ":" + port);
                 System.out.println(e.getMessage());
             }
         }
@@ -96,16 +96,16 @@ public class WebSocketAdapter {
 
         switch (modelToHandle) {
             case 1:
-                handlePersonOperation(operation);
+                handlePersonOperation(operation, host, port);
                 break;
             case 2:
-                handlePhysicalPersonOperation(operation);
+                handlePhysicalPersonOperation(operation, host, port);
                 break;
             case 3:
-                handleLegalPersonOperation(operation);
+                handleLegalPersonOperation(operation, host, port);
                 break;
             case 4:
-                handleWalletOperation(operation);
+                handleWalletOperation(operation, host, port);
                 break;
             default:
                 System.out.println("Opção inválida.");
@@ -132,7 +132,7 @@ public class WebSocketAdapter {
         this.getStream().writeUTF(message);
     }
 
-    private void handlePersonOperation(int option) throws IOException {
+    private void handlePersonOperation(int option, String host, int port) throws IOException {
         String params = "";
         String operation = "";
 
@@ -173,14 +173,17 @@ public class WebSocketAdapter {
             }
             default: {
                 System.out.println("Opção inválida, digite novamente.");
-//                break;
-                handlePersonOperation(option);
+                try {
+                    startupSocket(host, port);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 
         sendMessagePayload("pessoa", operation, params);
     }
-    private void handleLegalPersonOperation(int option) throws IOException {
+    private void handleLegalPersonOperation(int option, String host, int port) throws IOException {
         String params = "";
         String operation = "";
 
@@ -223,14 +226,17 @@ public class WebSocketAdapter {
             }
             default: {
                 System.out.println("Opção inválida, digite novamente.");
-//                break;
-                handleLegalPersonOperation(option);
+                try {
+                    startupSocket(host, port);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 
         sendMessagePayload("pessoa_juridica", operation, params);
     }
-    private void handlePhysicalPersonOperation(int option) throws IOException {
+    private void handlePhysicalPersonOperation(int option, String host, int port) throws IOException {
         String params = "";
         String operation = "";
 
@@ -273,14 +279,17 @@ public class WebSocketAdapter {
             }
             default: {
                 System.out.println("Opção inválida, digite novamente.");
-//                break;
-                handlePhysicalPersonOperation(option);
+                try {
+                    startupSocket(host, port);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 
         sendMessagePayload("pessoa_fisica", operation, params);
     }
-    private void handleWalletOperation(int option) throws IOException {
+    private void handleWalletOperation(int option, String host, int port) throws IOException {
         Scanner scanner = new Scanner(System.in);
         String params = "";
         String operation = "";
@@ -341,8 +350,11 @@ public class WebSocketAdapter {
             }
             default: {
                 System.out.println("Opção inválida, digite novamente.");
-//                break;
-                handleWalletOperation(option);
+                try {
+                    startupSocket(host, port);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 
