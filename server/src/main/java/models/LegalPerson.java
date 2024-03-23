@@ -3,8 +3,8 @@ package models;
 public class LegalPerson extends Person {
     protected String cnpj;
 
-    public LegalPerson(String cpf, String nome, String endereco, String cnpj) {
-        super(cpf, nome, endereco);
+    public LegalPerson(String cpf, String name, String address, String cnpj) {
+        super(cpf, name, address);
         this.cnpj = cnpj;
     }
 

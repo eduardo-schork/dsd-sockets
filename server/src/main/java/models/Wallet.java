@@ -4,73 +4,73 @@ import java.util.HashMap;
 
 public class Wallet {
 
-    protected String nome;
-    protected Person responsavel;
-    protected Double faixaSalarialInicial;
-    protected Double faixaSalarialFinal;
+    protected String name;
+    protected Person responsible;
+    protected Double initialSalary;
+    protected Double finalSalary;
 
-    protected HashMap<String, Person> clientes = new HashMap<String, Person>();
+    protected HashMap<String, Person> customers = new HashMap<String, Person>();
 
-    public Wallet(String nome, Person responsavel, Double faixaSalarialInicial, Double faixaSalarialFinal,
-            HashMap<String, Person> clientes) {
-        this.nome = nome;
-        this.responsavel = responsavel;
-        this.faixaSalarialInicial = faixaSalarialInicial;
-        this.faixaSalarialFinal = faixaSalarialFinal;
-        this.clientes = clientes;
+    public Wallet(String name, Person responsible, Double initialSalary, Double finalSalary,
+            HashMap<String, Person> customers) {
+        this.name = name;
+        this.responsible = responsible;
+        this.initialSalary = initialSalary;
+        this.finalSalary = finalSalary;
+        this.customers = customers;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Person getResponsavel() {
-        return responsavel;
+    public Person getResponsible() {
+        return responsible;
     }
 
-    public void setResponsavel(Person responsavel) {
-        this.responsavel = responsavel;
+    public void setResponsible(Person responsible) {
+        this.responsible = responsible;
     }
 
-    public Double getFaixaSalarialInicial() {
-        return faixaSalarialInicial;
+    public Double getInitialSalary() {
+        return initialSalary;
     }
 
-    public void setFaixaSalarialInicial(Double faixaSalarialInicial) {
-        this.faixaSalarialInicial = faixaSalarialInicial;
+    public void setInitialSalary(Double initialSalary) {
+        this.initialSalary = initialSalary;
     }
 
-    public Double getFaixaSalarialFinal() {
-        return faixaSalarialFinal;
+    public Double getFinalSalary() {
+        return finalSalary;
     }
 
-    public void setFaixaSalarialFinal(Double faixaSalarialFinal) {
-        this.faixaSalarialFinal = faixaSalarialFinal;
+    public void setFinalSalary(Double finalSalary) {
+        this.finalSalary = finalSalary;
     }
 
-    public HashMap<String, Person> getClientes() {
-        return clientes;
+    public HashMap<String, Person> getcustomers() {
+        return customers;
     }
 
-    public void setClientes(HashMap<String, Person> clientes) {
-        this.clientes = clientes;
+    public void setCustomers(HashMap<String, Person> customers) {
+        this.customers = customers;
     }
 
-    public void addCliente(Person cliente) {
-        this.clientes.put(cliente.getCpf(), cliente);
+    public void addCustomer(Person customer) {
+        this.customers.put(customer.getCpf(), customer);
     }
 
-    public void removeCliente(Person cliente) {
-        this.clientes.remove(cliente.getCpf());
+    public void removeCustomer(Person customer) {
+        this.customers.remove(customer.getCpf());
     }
 
     @Override
     public String toString() {
-        return nome + ";" + faixaSalarialInicial + ";" + faixaSalarialFinal + ";" + responsavel.toString() + ";"
-                + clientes.size();
+        return name + ";" + initialSalary + ";" + finalSalary + ";" + responsible.toString() + ";"
+                + customers.size();
     }
 }

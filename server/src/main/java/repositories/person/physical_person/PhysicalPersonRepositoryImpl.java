@@ -16,8 +16,12 @@ public class PhysicalPersonRepositoryImpl extends PersonRepositoryImpl implement
         if (findPersonByParams(params) != null) {
             return "Pessoa com mesmo CPF já cadastrada";
         }
-        PhysicalPerson person = new PhysicalPerson(params.get("cpf"), params.get("nome"), params.get("endereco"),
+        PhysicalPerson person = new PhysicalPerson(
+                params.get("cpf"),
+                params.get("name"),
+                params.get("address"),
                 params.get("email"));
+
         LocalStorageAdapter.people.put(person.getCpf(), person);
 
         return "Pessoa cadastrada com sucesso";
@@ -30,8 +34,8 @@ public class PhysicalPersonRepositoryImpl extends PersonRepositoryImpl implement
             return "Pessoa não encontrada";
         }
 
-        person.setNome(params.get("nome"));
-        person.setEndereco(params.get("endereco"));
+        person.setName(params.get("name"));
+        person.setAddress(params.get("address"));
         person.setEmail(params.get("email"));
         return "Pessoa atualizada com sucesso";
     }

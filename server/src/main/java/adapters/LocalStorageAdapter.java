@@ -1,8 +1,6 @@
 package adapters;
 
-import models.LegalPerson;
 import models.Person;
-import models.PhysicalPerson;
 import models.Wallet;
 
 import java.util.HashMap;

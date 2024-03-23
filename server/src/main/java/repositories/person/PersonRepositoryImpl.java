@@ -19,7 +19,7 @@ public class PersonRepositoryImpl implements IPersonRepository {
             return "Pessoa com mesmo CPF já cadastrada";
         }
 
-        Person person = new Person(params.get("cpf"), params.get("nome"), params.get("endereco"));
+        Person person = new Person(params.get("cpf"), params.get("name"), params.get("address"));
         LocalStorageAdapter.people.put(person.getCpf(), person);
 
         return "Pessoa cadastrada com sucesso";
@@ -31,8 +31,8 @@ public class PersonRepositoryImpl implements IPersonRepository {
             return "Pessoa não encontrada";
         }
 
-        person.setNome(params.get("nome"));
-        person.setEndereco(params.get("endereco"));
+        person.setName(params.get("name"));
+        person.setAddress(params.get("address"));
         return "Pessoa atualizada com sucesso";
     }
 

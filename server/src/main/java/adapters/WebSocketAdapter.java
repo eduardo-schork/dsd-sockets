@@ -1,17 +1,17 @@
 package adapters;
 
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashMap;
+
 import constants.OperationsConstant;
 import repositories.IBaseRepository;
 import repositories.person.PersonRepositoryImpl;
 import repositories.person.legal_person.LegalPersonRepositoryImpl;
 import repositories.person.physical_person.PhysicalPersonRepositoryImpl;
 import repositories.wallet.WalletRepositoryImpl;
-
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.HashMap;
 
 public class WebSocketAdapter {
     DataInputStream dataInputStream;
@@ -23,7 +23,7 @@ public class WebSocketAdapter {
         Socket socket = null;
 
         while (true) {
-            try{
+            try {
                 System.out.println("Esperando conexões");
                 socket = serverSocket.accept();
                 System.out.println("Conexão estabelecida com " + socket.getInetAddress().getHostAddress());
@@ -50,14 +50,14 @@ public class WebSocketAdapter {
         HashMap<String, String> params = this.getParams(message);
         IBaseRepository repository;
 
-        switch (params.get("modelo")) {
-            case "pessoa_fisica":
+        switch (params.get("model")) {
+            case "physical_person":
                 repository = new PhysicalPersonRepositoryImpl();
                 break;
-            case "pessoa_juridica":
+            case "legal_person":
                 repository = new LegalPersonRepositoryImpl();
                 break;
-            case "pessoa":
+            case "person":
                 repository = new PersonRepositoryImpl();
                 break;
             case "wallet":
@@ -67,7 +67,7 @@ public class WebSocketAdapter {
                 throw new Exception("Modelo não reconhecido.");
         }
 
-        switch (params.get("operacao")) {
+        switch (params.get("operation")) {
             case OperationsConstant.INSERT:
                 response = repository.insert(params);
                 break;

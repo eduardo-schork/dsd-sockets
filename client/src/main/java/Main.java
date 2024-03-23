@@ -12,6 +12,8 @@ public class Main {
         System.out.println("Insira a porta do host (ex: 3001):");
         int port = scanner.nextInt();
 
+        scanner.close();
+
         new WebSocketAdapter(host, port);
     }
 

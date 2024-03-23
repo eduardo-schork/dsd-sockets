@@ -15,12 +15,12 @@ public class WebSocketAdapter {
 
     public WebSocketAdapter(String host, int port) throws Exception {
 
-        if(isFirstConnection){
+        if (isFirstConnection) {
             try {
                 this.socket = new Socket(host, port);
                 this.stream = new DataOutputStream(this.socket.getOutputStream());
                 this.startupSocket(host, port);
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Não foi possível conectar com " + host + ":" + port);
                 System.out.println(e.getMessage());
             }
@@ -41,17 +41,17 @@ public class WebSocketAdapter {
 
         InputStream inputStream = this.getSocket().getInputStream();
 
-        byte[] dadosBrutos = new byte[1024];
+        byte[] rawDataBytes = new byte[1024];
 
-        int qtdBytesLidos = 0;
+        int readBytesQuantity = 0;
 
-        qtdBytesLidos = inputStream.read(dadosBrutos);
-        String response = new String(dadosBrutos, 0, qtdBytesLidos);
+        readBytesQuantity = inputStream.read(rawDataBytes);
+        String response = new String(rawDataBytes, 0, readBytesQuantity);
 
         System.out.println(response);
         System.out.println("\n");
         isFirstConnection = false;
-        startupSocket(host,port);
+        startupSocket(host, port);
 
     }
 
@@ -65,8 +65,7 @@ public class WebSocketAdapter {
                         "2 - Pessoa Física\n " +
                         "3 - Pessoa Jurídica\n " +
                         "4 - Carteira\n " +
-                        "5 - Sair"
-        );
+                        "5 - Sair");
 
         String modelToHandle = scanner.next();
 
@@ -131,7 +130,7 @@ public class WebSocketAdapter {
     }
 
     private String createMessagePayload(String model, String operation, String params) {
-        String message = "modelo=" + model +";operacao=" + operation + ";" + params;
+        String message = "model=" + model + ";operation=" + operation + ";" + params;
 
         return message;
     }
@@ -147,21 +146,21 @@ public class WebSocketAdapter {
         String operation = "";
 
         switch (option) {
-            case "1" : {
+            case "1": {
                 String cpf = requestParamToUser("Insira o CPF");
-                String nome = requestParamToUser("Insira o Nome");
-                String endereco = requestParamToUser("Insira o Endereço");
+                String name = requestParamToUser("Insira o Nome");
+                String address = requestParamToUser("Insira o Endereço");
 
-                params = "cpf=" + cpf + ";nome=" + nome + ";endereco=" + endereco;
+                params = "cpf=" + cpf + ";name=" + name + ";address=" + address;
                 operation = OperationsConstant.INSERT;
                 break;
             }
             case "2": {
                 String cpf = requestParamToUser("Insira o CPF");
-                String nome = requestParamToUser("Insira o Nome");
-                String endereco = requestParamToUser("Insira o Endereço");
+                String name = requestParamToUser("Insira o Nome");
+                String address = requestParamToUser("Insira o Endereço");
 
-                params = "cpf=" + cpf + ";nome=" + nome + ";endereco=" + endereco;
+                params = "cpf=" + cpf + ";name=" + name + ";address=" + address;
                 operation = OperationsConstant.UPDATE;
                 break;
             }
@@ -192,30 +191,31 @@ public class WebSocketAdapter {
             }
         }
 
-        sendMessagePayload("pessoa", operation, params);
+        sendMessagePayload("person", operation, params);
     }
+
     private void handleLegalPersonOperation(String option, String host, int port) throws IOException {
         String params = "";
         String operation = "";
 
         switch (option) {
-            case "1" : {
+            case "1": {
                 String cpf = requestParamToUser("Insira o CPF");
-                String nome = requestParamToUser("Insira o Nome");
-                String endereco = requestParamToUser("Insira o Endereço");
+                String name = requestParamToUser("Insira o Nome");
+                String address = requestParamToUser("Insira o Endereço");
                 String cnpj = requestParamToUser("Insira o CNPJ");
 
-                params = "cpf=" + cpf + ";nome=" + nome + ";endereco=" + endereco + ";cnpj=" + cnpj;
+                params = "cpf=" + cpf + ";name=" + name + ";address=" + address + ";cnpj=" + cnpj;
                 operation = OperationsConstant.INSERT;
                 break;
             }
             case "2": {
                 String cpf = requestParamToUser("Insira o CPF");
-                String nome = requestParamToUser("Insira o Nome");
-                String endereco = requestParamToUser("Insira o Endereço");
+                String name = requestParamToUser("Insira o Nome");
+                String address = requestParamToUser("Insira o Endereço");
                 String cnpj = requestParamToUser("Insira o CNPJ");
 
-                params = "cpf=" + cpf + ";nome=" + nome + ";endereco=" + endereco + ";cnpj=" + cnpj;
+                params = "cpf=" + cpf + ";name=" + name + ";address=" + address + ";cnpj=" + cnpj;
                 operation = OperationsConstant.UPDATE;
                 break;
             }
@@ -246,30 +246,31 @@ public class WebSocketAdapter {
             }
         }
 
-        sendMessagePayload("pessoa_juridica", operation, params);
+        sendMessagePayload("legal_person", operation, params);
     }
+
     private void handlePhysicalPersonOperation(String option, String host, int port) throws IOException {
         String params = "";
         String operation = "";
 
         switch (option) {
-            case "1" : {
+            case "1": {
                 String cpf = requestParamToUser("Insira o CPF");
-                String nome = requestParamToUser("Insira o Nome");
-                String endereco = requestParamToUser("Insira o Endereço");
+                String name = requestParamToUser("Insira o Nome");
+                String address = requestParamToUser("Insira o Endereço");
                 String email = requestParamToUser("Insira o Email");
 
-                params = "cpf=" + cpf + ";nome=" + nome + ";endereco=" + endereco + ";email=" + email;
+                params = "cpf=" + cpf + ";name=" + name + ";address=" + address + ";email=" + email;
                 operation = OperationsConstant.INSERT;
                 break;
             }
             case "2": {
                 String cpf = requestParamToUser("Insira o CPF");
-                String nome = requestParamToUser("Insira o Nome");
-                String endereco = requestParamToUser("Insira o Endereço");
+                String name = requestParamToUser("Insira o Nome");
+                String address = requestParamToUser("Insira o Endereço");
                 String email = requestParamToUser("Insira o Email");
 
-                params = "cpf=" + cpf + ";nome=" + nome + ";endereco=" + endereco + ";email=" + email;
+                params = "cpf=" + cpf + ";name=" + name + ";address=" + address + ";email=" + email;
                 operation = OperationsConstant.UPDATE;
                 break;
             }
@@ -300,12 +301,13 @@ public class WebSocketAdapter {
             }
         }
 
-        sendMessagePayload("pessoa_fisica", operation, params);
+        sendMessagePayload("physical_person", operation, params);
     }
+
     private void handleWalletOperation(String option, String host, int port) throws IOException {
-        Scanner scanner = new Scanner(System.in);
         String params = "";
         String operation = "";
+
         switch (option) {
             case "1": {
                 String walletName = requestParamToUser("Insira o nome da carteira:");
@@ -313,7 +315,8 @@ public class WebSocketAdapter {
                 String walletInitialSalary = requestParamToUser("Insira a faixa salarial inicial:");
                 String walletFinalSalary = requestParamToUser("Insira a faixa salarial final:");
 
-                params = "nome=" + walletName+ ";responsavel="+ walletResponsible+ ";faixaSalarialInicial="+walletInitialSalary+";faixaSalarialFinal="+walletFinalSalary;
+                params = "name=" + walletName + ";responsible=" + walletResponsible + ";initialSalary="
+                        + walletInitialSalary + ";finalSalary=" + walletFinalSalary;
                 operation = OperationsConstant.INSERT;
                 break;
             }
@@ -324,7 +327,8 @@ public class WebSocketAdapter {
                 String walletInitialSalary = requestParamToUser("Insira a faixa salarial inicial:");
                 String walletFinalSalary = requestParamToUser("Insira a faixa salarial final:");
 
-                params = "nome=" + walletName+ ";novoNome="+walletNewName + ";responsavel="+ walletResponsible+ ";faixaSalarialInicial="+walletInitialSalary+";faixaSalarialFinal="+walletFinalSalary;
+                params = "name=" + walletName + ";newName=" + walletNewName + ";responsible=" + walletResponsible
+                        + ";initialSalary=" + walletInitialSalary + ";finalSalary=" + walletFinalSalary;
 
                 operation = OperationsConstant.UPDATE;
                 break;
@@ -332,13 +336,13 @@ public class WebSocketAdapter {
             case "3": {
                 String walletName = requestParamToUser("Insira o nome da carteira:");
                 operation = OperationsConstant.DELETE;
-                params = "nome=" + walletName;
+                params = "name=" + walletName;
                 break;
             }
             case "4": {
                 String walletName = requestParamToUser("Insira o nome da carteira:");
                 operation = OperationsConstant.GET;
-                params = "nome=" + walletName;
+                params = "name=" + walletName;
                 break;
             }
             case "5": {
@@ -349,15 +353,15 @@ public class WebSocketAdapter {
                 String walletName = requestParamToUser("Insira o nome da carteira:");
                 String walletResponsible = requestParamToUser("Insira o CPF do cliente:");
 
-                params = "nome=" + walletName + ";cpf=" + walletResponsible;
+                params = "name=" + walletName + ";cpf=" + walletResponsible;
                 operation = OperationsConstant.ADD;
                 break;
 
             }
-            case "7":{
+            case "7": {
                 String walletName = requestParamToUser("Insira o nome da carteira:");
                 String walletResponsible = requestParamToUser("Insira o CPF do cliente:");
-                params = "nome=" + walletName + ";cpf=" + walletResponsible;
+                params = "name=" + walletName + ";cpf=" + walletResponsible;
                 operation = OperationsConstant.REMOVE;
                 break;
             }
@@ -376,7 +380,8 @@ public class WebSocketAdapter {
     }
 
     private void selectDefaultOptionsOperation() {
-        System.out.println("Por favor, escolha a operação: \n 1 - INSERT \n 2 - UPDATE\n 3 - DELETE \n 4 - GET \n 5 - LIST");
+        System.out.println(
+                "Por favor, escolha a operação: \n 1 - INSERT \n 2 - UPDATE\n 3 - DELETE \n 4 - GET \n 5 - LIST");
     }
 
     private void selectCarteiraOptionsOperation() {

@@ -3,13 +3,13 @@ package models;
 public class Person {
 
     protected String cpf;
-    protected String nome;
-    protected String endereco;
+    protected String name;
+    protected String address;
 
-    public Person(String cpf, String nome, String endereco) {
+    public Person(String cpf, String name, String address) {
         this.cpf = cpf;
-        this.nome = nome;
-        this.endereco = endereco;
+        this.name = name;
+        this.address = address;
     }
 
     public String getCpf() {
@@ -20,24 +20,24 @@ public class Person {
         this.cpf = cpf;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public String getAddress() {
+        return address;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
     public String toString() {
-        return cpf + ";" + nome + ";" + endereco;
+        return cpf + ";" + name + ";" + address;
     }
 }

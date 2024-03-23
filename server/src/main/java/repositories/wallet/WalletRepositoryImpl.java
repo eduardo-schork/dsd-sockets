@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class WalletRepositoryImpl implements IWalletRepository {
 
     public Wallet findWalletByParams(HashMap<String, String> params) {
-        return LocalStorageAdapter.wallets.get(params.get("nome"));
+        return LocalStorageAdapter.wallets.get(params.get("name"));
     }
 
     public String insert(HashMap<String, String> params) {
@@ -19,19 +19,19 @@ public class WalletRepositoryImpl implements IWalletRepository {
             return "Carteira com mesmo nome já cadastrada";
         }
 
-        Person responsavel = LocalStorageAdapter.people.get(params.get("responsavel"));
+        Person responsavel = LocalStorageAdapter.people.get(params.get("responsible"));
 
         if (responsavel != null) {
-            String nomeParams = params.get("nome");
-            Double faixaSalarialInicialParams = Double.parseDouble(params.get("faixaSalarialInicial"));
-            Double faixaSalarialFinalParams = Double.parseDouble(params.get("faixaSalarialFinal"));
+            String nameParams = params.get("name");
+            Double initialSalaryParams = Double.parseDouble(params.get("initialSalary"));
+            Double finalSalaryParams = Double.parseDouble(params.get("finalSalary"));
 
             HashMap<String, Person> clientes = new HashMap<>();
 
-            Wallet wallet = new Wallet(nomeParams, responsavel, faixaSalarialInicialParams, faixaSalarialFinalParams,
+            Wallet wallet = new Wallet(nameParams, responsavel, initialSalaryParams, finalSalaryParams,
                     clientes);
 
-            LocalStorageAdapter.wallets.put(wallet.getNome(), wallet);
+            LocalStorageAdapter.wallets.put(wallet.getName(), wallet);
             return "Carteira cadastrada comm sucesso";
         }
 
@@ -45,25 +45,25 @@ public class WalletRepositoryImpl implements IWalletRepository {
             return "Carteira não encontrada";
         }
 
-        Person responsavel = LocalStorageAdapter.people.get(params.get("responsavel"));
+        Person responsavel = LocalStorageAdapter.people.get(params.get("responsible"));
 
         if (responsavel == null) {
             return "Responsável informado não encontrado";
         }
 
-        String oldName = wallet.getNome();
+        String oldName = wallet.getName();
 
-        String nomeParams = params.get("novoNome");
-        Double faixaSalarialInicialParams = Double.parseDouble(params.get("faixaSalarialInicial"));
-        Double faixaSalarialFinalParams = Double.parseDouble(params.get("faixaSalarialFinal"));
+        String nameParams = params.get("newName");
+        Double initialSalaryParams = Double.parseDouble(params.get("initialSalary"));
+        Double finalSalaryParams = Double.parseDouble(params.get("finalSalary"));
 
-        wallet.setNome(nomeParams);
-        wallet.setResponsavel(responsavel);
-        wallet.setFaixaSalarialInicial(faixaSalarialInicialParams);
-        wallet.setFaixaSalarialFinal(faixaSalarialFinalParams);
+        wallet.setName(nameParams);
+        wallet.setResponsible(responsavel);
+        wallet.setInitialSalary(initialSalaryParams);
+        wallet.setFinalSalary(finalSalaryParams);
 
         LocalStorageAdapter.wallets.remove(oldName);
-        LocalStorageAdapter.wallets.put(wallet.getNome(), wallet);
+        LocalStorageAdapter.wallets.put(wallet.getName(), wallet);
         return "Carteira atualizada com sucesso";
     }
 
@@ -91,7 +91,7 @@ public class WalletRepositoryImpl implements IWalletRepository {
             return "Carteira não encontrada";
         }
 
-        LocalStorageAdapter.wallets.remove(wallet.getNome());
+        LocalStorageAdapter.wallets.remove(wallet.getName());
         return "Carteira removida com sucesso";
     }
 
@@ -135,7 +135,7 @@ public class WalletRepositoryImpl implements IWalletRepository {
             return "Carteira não encontrada";
         }
 
-        wallet.addCliente(person);
+        wallet.addCustomer(person);
         return "Cliente adicionado a Carteira";
     }
 
@@ -159,7 +159,7 @@ public class WalletRepositoryImpl implements IWalletRepository {
             return "Carteira não encontrada";
         }
 
-        wallet.removeCliente(person);
+        wallet.removeCustomer(person);
         return "Cliente removido da Carteira";
     }
 

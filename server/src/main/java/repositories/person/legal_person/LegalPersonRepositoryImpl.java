@@ -17,8 +17,12 @@ public class LegalPersonRepositoryImpl extends PersonRepositoryImpl implements I
             return "Pessoa com mesmo CPF já cadastrada";
         }
 
-        LegalPerson person = new LegalPerson(params.get("cpf"), params.get("nome"), params.get("endereco"),
+        LegalPerson person = new LegalPerson(
+                params.get("cpf"),
+                params.get("name"),
+                params.get("address"),
                 params.get("cnpj"));
+
         LocalStorageAdapter.people.put(person.getCpf(), person);
 
         return "Pessoa cadastrada com sucesso";
@@ -27,12 +31,13 @@ public class LegalPersonRepositoryImpl extends PersonRepositoryImpl implements I
     @Override
     public String update(HashMap<String, String> params) {
         LegalPerson person = (LegalPerson) this.findPersonByParams(params);
+
         if (person == null) {
             return "Pessoa não encontrada";
         }
 
-        person.setNome(params.get("nome"));
-        person.setEndereco(params.get("endereco"));
+        person.setName(params.get("name"));
+        person.setAddress(params.get("address"));
         person.setCnpj(params.get("cnpj"));
         return "Pessoa atualizada com sucesso";
     }
