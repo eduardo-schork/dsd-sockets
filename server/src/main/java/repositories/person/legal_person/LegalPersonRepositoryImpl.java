@@ -30,7 +30,7 @@ public class LegalPersonRepositoryImpl extends PersonRepositoryImpl implements I
 
     @Override
     public String update(HashMap<String, String> params) {
-        LegalPerson person = (LegalPerson) this.findPersonByParams(params);
+        Person person = (Person) this.findPersonByParams(params);
 
         if (person == null || !(person instanceof LegalPerson)) {
             return "Pessoa não encontrada";
@@ -38,7 +38,7 @@ public class LegalPersonRepositoryImpl extends PersonRepositoryImpl implements I
 
         person.setName(params.get("name"));
         person.setAddress(params.get("address"));
-        person.setCnpj(params.get("cnpj"));
+        ((LegalPerson) person).setCnpj(params.get("cnpj"));
         return "Pessoa atualizada com sucesso";
     }
 
