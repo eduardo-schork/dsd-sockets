@@ -34,7 +34,7 @@ public class PhysicalPersonRepositoryImpl extends PersonRepositoryImpl implement
     public String update(HashMap<String, String> params) {
         Person person = (Person) this.findPersonByParams(params);
         if (person == null || !(person instanceof PhysicalPerson)) {
-            return "Pessoa não encontrada";
+            return "Pessoa física não encontrada";
         }
 
         person.setName(params.get("name"));
@@ -75,7 +75,7 @@ public class PhysicalPersonRepositoryImpl extends PersonRepositoryImpl implement
 
         Person person = this.findPersonByParams(params);
         if (person == null || !(person instanceof PhysicalPerson)) {
-            return "Pessoa não encontrada";
+            return "Pessoa física não encontrada";
         }
 
         return person.toString();
@@ -89,7 +89,7 @@ public class PhysicalPersonRepositoryImpl extends PersonRepositoryImpl implement
 
         Person person = this.findPersonByParams(params);
         if (person == null || !(person instanceof PhysicalPerson)) {
-            return "Pessoa não encontrada";
+            return "Pessoa física não encontrada";
         }
 
         String customerCPF = person.getCpf();

@@ -36,7 +36,7 @@ public class LegalPersonRepositoryImpl extends PersonRepositoryImpl implements I
         Person person = (Person) this.findPersonByParams(params);
 
         if (person == null || !(person instanceof LegalPerson)) {
-            return "Pessoa não encontrada";
+            return "Pessoa jurídica não encontrada";
         }
 
         person.setName(params.get("name"));
@@ -77,7 +77,7 @@ public class LegalPersonRepositoryImpl extends PersonRepositoryImpl implements I
 
         Person person = this.findPersonByParams(params);
         if (person == null || !(person instanceof LegalPerson)) {
-            return "Pessoa não encontrada";
+            return "Pessoa jurídica não encontrada";
         }
 
         return person.toString();
@@ -91,7 +91,7 @@ public class LegalPersonRepositoryImpl extends PersonRepositoryImpl implements I
 
         Person person = this.findPersonByParams(params);
         if (person == null || !(person instanceof LegalPerson)) {
-            return "Pessoa não encontrada";
+            return "Pessoa jurídica não encontrada";
         }
 
         String customerCPF = person.getCpf();
