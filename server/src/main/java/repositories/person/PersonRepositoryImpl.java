@@ -2,6 +2,8 @@ package repositories.person;
 
 import adapters.LocalStorageAdapter;
 import models.Person;
+import repositories.wallet.IWalletRepository;
+import repositories.wallet.WalletRepositoryImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,7 +61,13 @@ public class PersonRepositoryImpl implements IPersonRepository {
             return "Pessoa não encontrada";
         }
 
-        LocalStorageAdapter.people.remove(person.getCpf());
+        String customerCPF = person.getCpf();
+
+        IWalletRepository walletRepository = new WalletRepositoryImpl();
+        walletRepository.removePersonIfExists(customerCPF);
+
+        LocalStorageAdapter.people.remove(customerCPF);
+
         return "Pessoa removida com sucesso";
     }
 

@@ -163,4 +163,15 @@ public class WalletRepositoryImpl implements IWalletRepository {
         return "Cliente removido da Carteira";
     }
 
+    @Override
+    public void removePersonIfExists(String cpf) {
+        for (Wallet wallet : LocalStorageAdapter.wallets.values()) {
+            for (Person customer : wallet.getcustomers().values()) {
+                if (customer.getCpf().equals(cpf)) {
+                    wallet.removeCustomer(customer);
+                    break;
+                }
+            }
+        }
+    }
 }

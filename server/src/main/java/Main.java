@@ -11,6 +11,8 @@ public class Main {
         int userPortInput = scanner.nextInt();
 
         new WebSocketAdapter(userPortInput);
+
+        scanner.close();
     }
 
 }
