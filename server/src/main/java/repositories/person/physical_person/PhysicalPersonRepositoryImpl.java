@@ -1,6 +1,7 @@
 package repositories.person.physical_person;
 
 import adapters.LocalStorageAdapter;
+import models.LegalPerson;
 import models.Person;
 import models.PhysicalPerson;
 import repositories.person.PersonRepositoryImpl;
@@ -30,7 +31,7 @@ public class PhysicalPersonRepositoryImpl extends PersonRepositoryImpl implement
     @Override
     public String update(HashMap<String, String> params) {
         PhysicalPerson person = (PhysicalPerson) this.findPersonByParams(params);
-        if (person == null) {
+        if (person == null || !(person instanceof PhysicalPerson)) {
             return "Pessoa não encontrada";
         }
 
@@ -62,5 +63,19 @@ public class PhysicalPersonRepositoryImpl extends PersonRepositoryImpl implement
         }
 
         return response.toString();
+    }
+
+    @Override
+    public String get(HashMap<String, String> params) {
+        if (LocalStorageAdapter.people.isEmpty()) {
+            return "Sem pessoas cadastradas";
+        }
+
+        Person person = this.findPersonByParams(params);
+        if (person == null || !(person instanceof PhysicalPerson)) {
+            return "Pessoa não encontrada";
+        }
+
+        return person.toString();
     }
 }

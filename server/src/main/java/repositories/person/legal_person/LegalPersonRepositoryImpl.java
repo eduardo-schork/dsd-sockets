@@ -32,7 +32,7 @@ public class LegalPersonRepositoryImpl extends PersonRepositoryImpl implements I
     public String update(HashMap<String, String> params) {
         LegalPerson person = (LegalPerson) this.findPersonByParams(params);
 
-        if (person == null) {
+        if (person == null || !(person instanceof LegalPerson)) {
             return "Pessoa não encontrada";
         }
 
@@ -66,4 +66,17 @@ public class LegalPersonRepositoryImpl extends PersonRepositoryImpl implements I
         return response.toString();
     }
 
+    @Override
+    public String get(HashMap<String, String> params) {
+        if (LocalStorageAdapter.people.isEmpty()) {
+            return "Sem pessoas cadastradas";
+        }
+
+        Person person = this.findPersonByParams(params);
+        if (person == null || !(person instanceof LegalPerson)) {
+            return "Pessoa não encontrada";
+        }
+
+        return person.toString();
+    }
 }
