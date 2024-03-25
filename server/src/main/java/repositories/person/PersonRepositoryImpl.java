@@ -29,7 +29,7 @@ public class PersonRepositoryImpl implements IPersonRepository {
 
     public String update(HashMap<String, String> params) {
         Person person = this.findPersonByParams(params);
-        if (person == null) {
+        if (person == null || !(person instanceof Person)) {
             return "Pessoa não encontrada";
         }
 
@@ -57,7 +57,7 @@ public class PersonRepositoryImpl implements IPersonRepository {
         }
 
         Person person = this.findPersonByParams(params);
-        if (person == null) {
+        if (person == null || !(person instanceof Person)) {
             return "Pessoa não encontrada";
         }
 

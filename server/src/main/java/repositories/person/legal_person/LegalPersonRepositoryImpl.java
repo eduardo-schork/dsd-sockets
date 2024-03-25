@@ -3,7 +3,10 @@ package repositories.person.legal_person;
 import adapters.LocalStorageAdapter;
 import models.LegalPerson;
 import models.Person;
+import models.PhysicalPerson;
 import repositories.person.PersonRepositoryImpl;
+import repositories.wallet.IWalletRepository;
+import repositories.wallet.WalletRepositoryImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -78,5 +81,26 @@ public class LegalPersonRepositoryImpl extends PersonRepositoryImpl implements I
         }
 
         return person.toString();
+    }
+
+    @Override
+    public String delete(HashMap<String, String> params) {
+        if (LocalStorageAdapter.people.isEmpty()) {
+            return "Sem pessoas cadastradas";
+        }
+
+        Person person = this.findPersonByParams(params);
+        if (person == null || !(person instanceof LegalPerson)) {
+            return "Pessoa não encontrada";
+        }
+
+        String customerCPF = person.getCpf();
+
+        IWalletRepository walletRepository = new WalletRepositoryImpl();
+        walletRepository.removePersonIfExists(customerCPF);
+
+        LocalStorageAdapter.people.remove(customerCPF);
+
+        return "Pessoa removida com sucesso";
     }
 }
