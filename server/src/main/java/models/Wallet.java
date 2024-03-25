@@ -70,7 +70,6 @@ public class Wallet {
 
     @Override
     public String toString() {
-        return name + ";" + initialSalary + ";" + finalSalary + ";" + responsible.toString() + ";"
-                + customers.size();
+        return name + ";" + initialSalary + ";" + finalSalary + ";" + responsible.toString() + ";" + customers.size() + ";" + customers.toString();
     }
 }

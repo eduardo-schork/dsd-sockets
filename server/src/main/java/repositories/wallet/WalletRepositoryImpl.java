@@ -32,7 +32,7 @@ public class WalletRepositoryImpl implements IWalletRepository {
                     clientes);
 
             LocalStorageAdapter.wallets.put(wallet.getName(), wallet);
-            return "Carteira cadastrada comm sucesso";
+            return "Carteira cadastrada com sucesso";
         }
 
         return "Erro na criação de Carteira";
